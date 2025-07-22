@@ -82,14 +82,6 @@ export default function CatalogPage() {
   const handleSeeMore = () => {
     const nextPage = currentPage + 1;
     setCurrentPage(nextPage);
-
-    const params = new URLSearchParams();
-    if (selectedGenre !== "All") {
-      params.set("genre", selectedGenre);
-    }
-    params.set("page", nextPage.toString());
-
-    router.push(`/?${params.toString()}`);
   };
 
   return (
@@ -113,7 +105,14 @@ export default function CatalogPage() {
               id="genre-select"
               value={selectedGenre}
               onChange={(e) => handleGenreChange(e.target.value)}
-              className="px-6 py-2 text-xl focus:outline-none"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  (e.target as HTMLSelectElement).click();
+                }
+              }}
+              className="px-6 py-2 text-xl focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 bg-gray-50"
+              aria-label="Filter games by genre"
             >
               <option value="All">All</option>
               {availableFilters.map((filter) => (
@@ -129,10 +128,16 @@ export default function CatalogPage() {
           <LoadingSpinner />
         ) : games.length === 0 && !loading ? (
           <div className="text-center py-12">
-            <p className="text-gray-500 text-lg">No games found</p>
-            <p className="text-gray-400 text-sm mt-2">
-              Try selecting a different genre or refresh the page
+            <p className="text-gray-500 text-lg mb-2">No games found for &quot;{selectedGenre}&quot;</p>
+            <p className="text-gray-400 text-sm mb-4">
+              Try selecting a different genre or check back later for new releases
             </p>
+            <button
+              onClick={() => handleGenreChange("All")}
+              className="bg-gray-900 hover:bg-gray-800 text-white px-6 py-3 rounded-md font-medium transition-colors"
+            >
+              View All Games
+            </button>
           </div>
         ) : (
           <>

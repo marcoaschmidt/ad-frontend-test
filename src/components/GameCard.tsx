@@ -11,21 +11,28 @@ interface GameCardProps {
 
 export default function GameCard({ game }: GameCardProps) {
   const [isInCart, setIsInCart] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setIsInCart(CartService.isInCart(game.id));
   }, [game.id]);
 
-  const handleCartAction = () => {
-    if (isInCart) {
-      CartService.removeFromCart(game.id);
-      setIsInCart(false);
-    } else {
-      CartService.addToCart(game);
-      setIsInCart(true);
-    }
+  const handleCartAction = async () => {
+    setIsLoading(true);
+    
+    try {
+      if (isInCart) {
+        CartService.removeFromCart(game.id);
+        setIsInCart(false);
+      } else {
+        CartService.addToCart(game);
+        setIsInCart(true);
+      }
 
-    window.dispatchEvent(new Event("cartUpdated"));
+      window.dispatchEvent(new Event("cartUpdated"));
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -59,13 +66,14 @@ export default function GameCard({ game }: GameCardProps) {
         </div>
         <button
           onClick={handleCartAction}
-          className={`px-4 py-4 text-sm w-full font-medium rounded transition-colors ${
+          disabled={isLoading}
+          className={`px-4 py-4 text-sm w-full font-medium rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
             isInCart
               ? "bg-red-500 hover:bg-red-600 text-white"
               : "bg-white hover:bg-[#3B3B3B] text-[#3B3B3B] hover:text-white border border-[#3B3B3B]"
           }`}
         >
-          {isInCart ? "REMOVE" : "ADD TO CART"}
+          {isLoading ? "..." : isInCart ? "REMOVE" : "ADD TO CART"}
         </button>
       </div>
     </div>

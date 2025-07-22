@@ -88,12 +88,12 @@ export default function CartPage() {
                             </span>
                           )}
                         </div>
-                        <div className="h-3 block sm:hidden">
+                        <div className="min-w-3 min-h-3 w-3 h-3 flex-shrink-0 block sm:hidden">
                           <button
                             onClick={() => removeFromCart(item.id)}
-                            className="text-gray-400 hover:text-gray-600 p-1"
+                            className="text-gray-400 hover:text-gray-600 p-1 w-full h-full flex items-center justify-center"
                           >
-                            <Image src={X} alt="X" className="w-3 h-3" />
+                            <Image src={X} alt="X" className="w-3 h-3 min-w-3 min-h-3 flex-shrink-0" />
                           </button>
                         </div>
                       </div>
@@ -117,12 +117,12 @@ export default function CartPage() {
                             ${item.price.toFixed(2)}
                           </p>
                         </div>
-                        <div className="h-3 sm:block hidden">
+                        <div className="min-w-3 min-h-3 w-3 h-3 flex-shrink-0 sm:block hidden">
                           <button
                             onClick={() => removeFromCart(item.id)}
-                            className="text-gray-400 hover:text-gray-600"
+                            className="text-gray-400 hover:text-gray-600 w-full h-full flex items-center justify-center"
                           >
-                            <Image src={X} alt="X" className="w-3 h-3" />
+                            <Image src={X} alt="X" className="w-3 h-3 min-w-3 min-h-3 flex-shrink-0" />
                           </button>
                         </div>
                       </div>
