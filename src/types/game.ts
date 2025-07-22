@@ -3,7 +3,7 @@ export interface Game {
   genre: string
   image: string
   name: string
-  description: string
+  description?: string
   price: number
   isNew: boolean
 }

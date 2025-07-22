@@ -98,8 +98,8 @@ export default function CartPage() {
                         </div>
                       </div>
 
-                      <div className="flex gap-3">
-                        <div className="flex flex-col justify-between items-start mb-2">
+                      <div className="flex gap-1">
+                        <div className="flex flex-col max-w-[335px] justify-between items-start mb-2">
                           <div className="flex flex-col gap-1">
                             <p className="text-sm text-gray-500 font-semibold uppercase tracking-wide">
                               {item.genre}
@@ -120,7 +120,7 @@ export default function CartPage() {
                         <div className="h-3 sm:block hidden">
                           <button
                             onClick={() => removeFromCart(item.id)}
-                            className="text-gray-400 hover:text-gray-600 p-1"
+                            className="text-gray-400 hover:text-gray-600"
                           >
                             <Image src={X} alt="X" className="w-3 h-3" />
                           </button>
